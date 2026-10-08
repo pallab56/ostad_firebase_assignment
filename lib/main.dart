@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_firebase_assignment/splash_screen.dart';
 
 void main() {
@@ -11,12 +12,14 @@ class MyApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+    return ScreenUtilInit(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        ),
+        home: SplashScreen(),
       ),
-      home: SplashScreen(),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
 class AppColors {
-  static final Color scaffoldBgColor = Color(0xE2E8F0CC);
+  static final Color scaffoldBg = const Color(0xFFCBD5E1);
   static final Color whiteColor = Color(0xFFFFFFFF);
   static final Color buttonBgColor = Color(0xFF4F46E5);
   static final Color slightBlueColor = Color(0xFF02569B);
@@ -10,7 +10,7 @@ class AppColors {
 }
 
 
-// // Solid Colors
+// Solid Colors
 // static final Color slate400 = const Color(0xFF94A3B8);
 // static final Color white = const Color(0xFFFFFFFF);
 // static final Color flutterBlue = const Color(0xFF02569B);
