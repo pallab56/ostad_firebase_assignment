@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:task_manager_firebase_assignment/application/page/application_page.dart';
+import 'package:task_manager_firebase_assignment/auth/service/firebase_atuh_service.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_in/bloc/signin_bloc.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_in/bloc/signin_event.dart';
-import 'package:task_manager_firebase_assignment/auth/sign_in/bloc/signin_state.dart';
+import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_bloc.dart';
+import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_event.dart';
+import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_state.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_up/sign_up_page.dart';
 import 'package:task_manager_firebase_assignment/common/value/colors.dart';
 import 'package:task_manager_firebase_assignment/common/widget/flutter_icon.dart';
+import 'package:task_manager_firebase_assignment/common/widget/toast_meassage.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -48,7 +53,7 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(height: 18.h),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: BlocBuilder<SignInBloc, SignInState>(
+                child: BlocBuilder<SignUpBloc, SignUpState>(
                   builder: (context, state) {
                     return Form(
                       key: key,
@@ -88,16 +93,30 @@ class _SignInPageState extends State<SignInPage> {
 
                           reusableButton(
                             buttonName: 'SignIn',
-                            onTap: () {
+                            onTap: () async {
                               if (key.currentState!.validate()) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text('Form is validate')),
                                 );
-                                context.read<SignInBloc>().add(
-                                  EmailEvent(emailController.text),
+                                context.read<SignUpBloc>().add(
+                                  EmailRegisterEvent(emailController.text),
                                 );
-                                context.read<SignInBloc>().add(
-                                  PasswordEvent(passwordController.text),
+                                context.read<SignUpBloc>().add(
+                                  PasswordRegisterEvent(
+                                    passwordController.text,
+                                  ),
+                                );
+
+                                await FirebaseAuthhService.sigInWithEmailAndPassword(
+                                  email: state.email,
+                                  password: state.password,
+                                );
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ApplicationPage(),
+                                  ),
+                                  (route) => false,
                                 );
                               }
                             },
@@ -125,7 +144,30 @@ class _SignInPageState extends State<SignInPage> {
                           SizedBox(height: 15.h),
 
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () async {
+                              try {
+                                await FirebaseAuthhService.signInWithGooGle();
+                                AppToast.show(
+                                  title: 'SignIn Completed With GooGle',
+                                  message: 'User SignIn Successfully & varified to login',
+                                  type: ToastType.success,
+                                );
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ApplicationPage(),
+                                  ),
+                                  (route) => false,
+                                );
+                              } catch (e) {
+                                AppToast.show(
+                                  title: 'SigIn Failed',
+                                  message:
+                                      'something went wrong during LogIn ${e}',
+                                  type: ToastType.error,
+                                );
+                              }
+                            },
                             child: Container(
                               height: 45.h,
 

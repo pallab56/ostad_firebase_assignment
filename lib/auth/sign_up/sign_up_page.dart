@@ -1,12 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:task_manager_firebase_assignment/auth/service/firebase_atuh_service.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_in/sign_in.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_bloc.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_event.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_state.dart';
 import 'package:task_manager_firebase_assignment/common/value/colors.dart';
 import 'package:task_manager_firebase_assignment/common/widget/flutter_icon.dart';
+import 'package:task_manager_firebase_assignment/common/widget/toast_meassage.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -150,7 +153,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               SizedBox(height: 15.h),
                               reusableButton(
                                 buttonName: 'Create an Account',
-                                onTap: () {
+                                onTap: () async {
                                   if (key.currentState!.validate()) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
@@ -158,17 +161,48 @@ class _SignUpPageState extends State<SignUpPage> {
                                       ),
                                     );
                                     context.read<SignUpBloc>().add(
-                                      UserNameRegisterEvent(userNameController.text),
+                                      UserNameRegisterEvent(
+                                        userNameController.text,
+                                      ),
                                     );
                                     context.read<SignUpBloc>().add(
                                       EmailRegisterEvent(emailController.text),
                                     );
                                     context.read<SignUpBloc>().add(
-                                      PasswordRegisterEvent(passwordController.text),
+                                      PasswordRegisterEvent(
+                                        passwordController.text,
+                                      ),
                                     );
-                                     context.read<SignUpBloc>().add(
-                                      ConPassRegisterEvent(conPasswordController.text),
+                                    context.read<SignUpBloc>().add(
+                                      ConPassRegisterEvent(
+                                        conPasswordController.text,
+                                      ),
                                     );
+                                    try {
+                                      await FirebaseAuthhService.creteUserUsingEmailPassword(
+                                        userName: state.userName,
+                                        email: state.email,
+                                        password: state.password,
+                                      );
+                                      AppToast.show(
+                                        title: 'Registration',
+                                        message: 'User Created Successfully & varified to login',
+                                        type: ToastType.success,
+                                      );
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => SignInPage(),
+                                        ),
+                                      );
+                                    } on FirebaseAuthException catch (e) {
+                                      AppToast.show(
+                                        title: 'Registration Failed',
+                                        message:
+                                            'something went wrong during registration ${e.code}',
+                                        type: ToastType.success,
+                                      );
+                                    }
                                   }
                                 },
                               ),

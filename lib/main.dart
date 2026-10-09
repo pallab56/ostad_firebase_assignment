@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_in/bloc/signin_bloc.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_bloc.dart';
+import 'package:task_manager_firebase_assignment/global.dart';
 import 'package:task_manager_firebase_assignment/splash_screen.dart';
 
-void main() {
+void main() async {
+  await Global.init();
   runApp(const MyApp());
 }
 
@@ -17,8 +19,8 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_)=>SignInBloc()),
-          BlocProvider(create: (_)=>SignUpBloc()),
+          BlocProvider(create: (_) => SignInBloc()),
+          BlocProvider(create: (_) => SignUpBloc()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
