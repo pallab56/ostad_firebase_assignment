@@ -21,7 +21,9 @@ static void showMessage({required String msg}){
 
 // custom required context
   static void show(
+    BuildContext context,
    {
+    
     required String title,
     required String message,
     ToastType type = ToastType.info,

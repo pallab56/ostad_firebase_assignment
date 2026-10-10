@@ -185,6 +185,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         password: state.password,
                                       );
                                       AppToast.show(
+                                        context,
                                         title: 'Registration',
                                         message: 'User Created Successfully & varified to login',
                                         type: ToastType.success,
@@ -197,6 +198,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       );
                                     } on FirebaseAuthException catch (e) {
                                       AppToast.show(
+                                        context,
                                         title: 'Registration Failed',
                                         message:
                                             'something went wrong during registration ${e.code}',

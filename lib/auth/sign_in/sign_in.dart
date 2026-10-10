@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task_manager_firebase_assignment/application/page/application_page.dart';
 import 'package:task_manager_firebase_assignment/auth/service/firebase_atuh_service.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_in/bloc/signin_bloc.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_in/bloc/signin_event.dart';
@@ -12,6 +11,7 @@ import 'package:task_manager_firebase_assignment/auth/sign_up/sign_up_page.dart'
 import 'package:task_manager_firebase_assignment/common/value/colors.dart';
 import 'package:task_manager_firebase_assignment/common/widget/flutter_icon.dart';
 import 'package:task_manager_firebase_assignment/common/widget/toast_meassage.dart';
+import 'package:task_manager_firebase_assignment/features/task/view/task_list_screen.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -24,6 +24,8 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> key = GlobalKey<FormState>();
+
+  
   @override
   void dispose() {
     emailController.dispose();
@@ -98,23 +100,16 @@ class _SignInPageState extends State<SignInPage> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text('Form is validate')),
                                 );
-                                context.read<SignUpBloc>().add(
-                                  EmailRegisterEvent(emailController.text),
-                                );
-                                context.read<SignUpBloc>().add(
-                                  PasswordRegisterEvent(
-                                    passwordController.text,
-                                  ),
-                                );
+                              
 
                                 await FirebaseAuthhService.sigInWithEmailAndPassword(
-                                  email: state.email,
-                                  password: state.password,
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text,
                                 );
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => ApplicationPage(),
+                                    builder: (_) => const TaskListScreen(),
                                   ),
                                   (route) => false,
                                 );
@@ -148,6 +143,7 @@ class _SignInPageState extends State<SignInPage> {
                               try {
                                 await FirebaseAuthhService.signInWithGooGle();
                                 AppToast.show(
+                                  context,
                                   title: 'SignIn Completed With GooGle',
                                   message: 'User SignIn Successfully & varified to login',
                                   type: ToastType.success,
@@ -155,12 +151,13 @@ class _SignInPageState extends State<SignInPage> {
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => ApplicationPage(),
+                                    builder: (_) => const TaskListScreen(),
                                   ),
                                   (route) => false,
                                 );
                               } catch (e) {
                                 AppToast.show(
+                                  context,
                                   title: 'SigIn Failed',
                                   message:
                                       'something went wrong during LogIn ${e}',

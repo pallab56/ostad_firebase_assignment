@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -5,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_in/sign_in.dart';
 import 'package:task_manager_firebase_assignment/common/value/colors.dart';
 import 'package:task_manager_firebase_assignment/common/widget/flutter_icon.dart';
+import 'package:task_manager_firebase_assignment/features/task/view/task_list_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,13 +23,18 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _moveToNextPage() async {
-    await Future.delayed(Duration(seconds: 3));
-    if (!mounted) return;
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => SignInPage()),
-      (route) => false,
-    );
+    await Future.delayed(const Duration(seconds: 3));
+  if (!mounted) return;
+
+  final user = FirebaseAuth.instance.currentUser;
+
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(
+      builder: (_) => user != null ? const TaskListScreen() : const SignInPage(),
+    ),
+    (route) => false,
+  );
   }
 
   @override

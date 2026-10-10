@@ -63,11 +63,18 @@ class FirebaseAuthhService {
       idToken: googleAuth.idToken,
     );
 
-    _auth.signInWithCredential(credential);
+    await  _auth.signInWithCredential(credential);
   }
 
   static Future<void> logOut() async {
+    // await _auth.signOut();
+    // await GoogleSignIn.instance.signOut();
+
+    try {
+      await GoogleSignIn.instance.signOut();
+    } catch (_) {
+      // not signed in with Google, ignore
+    }
     await _auth.signOut();
-    await GoogleSignIn.instance.signOut();
   }
 }
