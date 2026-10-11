@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_event.dart';
-import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_state.dart';
+import 'package:task_manager_firebase_assignment/features/auth/sign_up/bloc/sign_up_event.dart';
+import 'package:task_manager_firebase_assignment/features/auth/sign_up/bloc/sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   SignUpBloc() : super(SignUpState()) {

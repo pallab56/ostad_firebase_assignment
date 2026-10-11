@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager_firebase_assignment/auth/service/firebase_atuh_service.dart';
+import 'package:task_manager_firebase_assignment/features/auth/service/firebase_atuh_service.dart';
 import 'package:task_manager_firebase_assignment/common/widget/toast_meassage.dart';
 import 'package:task_manager_firebase_assignment/features/task/constants/task_colors.dart';
 import 'package:task_manager_firebase_assignment/features/task/controller/task_controller.dart';
@@ -10,7 +10,7 @@ import 'package:task_manager_firebase_assignment/features/task/widgets/task_card
 import 'package:task_manager_firebase_assignment/features/task/widgets/task_filter_bar.dart';
 import 'package:task_manager_firebase_assignment/features/task/widgets/task_header.dart';
 
-import 'package:task_manager_firebase_assignment/auth/sign_in/sign_in.dart';
+import 'package:task_manager_firebase_assignment/features/auth/sign_in/sign_in.dart';
 
 class TaskListScreen extends StatefulWidget {
   String? payload;

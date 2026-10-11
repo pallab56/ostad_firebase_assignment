@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_manager_firebase_assignment/auth/sign_in/bloc/signin_event.dart';
-import 'package:task_manager_firebase_assignment/auth/sign_in/bloc/signin_state.dart';
+import 'package:task_manager_firebase_assignment/features/auth/sign_in/bloc/signin_event.dart';
+import 'package:task_manager_firebase_assignment/features/auth/sign_in/bloc/signin_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   SignInBloc() : super(SignInState()) {
