@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Navigator.pushAndRemoveUntil(
     context,
     MaterialPageRoute(
-      builder: (_) => user != null ? const TaskListScreen() : const SignInPage(),
+      builder: (_) => user != null ?  TaskListScreen() : const SignInPage(),
     ),
     (route) => false,
   );

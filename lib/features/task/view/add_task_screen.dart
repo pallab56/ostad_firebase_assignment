@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_firebase_assignment/common/service/local_notification_service.dart';
 import 'package:task_manager_firebase_assignment/common/widget/toast_meassage.dart';
 import 'package:task_manager_firebase_assignment/features/task/constants/task_colors.dart';
 import 'package:task_manager_firebase_assignment/features/task/controller/task_form_controller.dart';
@@ -26,24 +27,34 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   Future<void> _save() async {
-  FocusScope.of(context).unfocus();
-  if (!_form.validate()) return;
+    FocusScope.of(context).unfocus();
+    if (!_form.validate()) return;
+    final title = _form.titleCtrl.text.trim();
+    final body = _form.descCtrl.text.trim();
+    final error = await _form.save();
+    if (!mounted) return;
 
-  final error = await _form.save();
-  if (!mounted) return;
-
-  if (error != null) {
-    AppToast.show(
-      context,
-      title: 'Could not add task',
-      message: error,
-      type: ToastType.error,
-    );
-    return;
+    if (error != null) {
+      AppToast.show(
+        context,
+        title: 'Could not add task',
+        message: error,
+        type: ToastType.error,
+      );
+      return;
+    }
+    Navigator.pop(context); // close first
+    
+    try {
+      await LocalNotificationsService.showNow(
+        id: DateTime.now().millisecondsSinceEpoch ~/ 1000, // unique id per task
+        title: '$title added',
+        body: body,
+      );
+    } catch (e) {
+      debugPrint('Notification failed: $e'); // never blocks the UI
+    }
   }
-
-  Navigator.pop(context); // close first
-}
 
   @override
   Widget build(BuildContext context) {

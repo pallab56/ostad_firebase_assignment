@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_in/bloc/signin_bloc.dart';
 import 'package:task_manager_firebase_assignment/auth/sign_up/bloc/sign_up_bloc.dart';
+import 'package:task_manager_firebase_assignment/common/routes/app_navigator.dart';
+import 'package:task_manager_firebase_assignment/common/service/local_notification_service.dart';
 import 'package:task_manager_firebase_assignment/global.dart';
 import 'package:task_manager_firebase_assignment/splash_screen.dart';
 
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
             colorScheme: .fromSeed(seedColor: Colors.deepPurple),
           ),
           home: SplashScreen(),
+          navigatorKey: AppNavigator.navigatorKey,
         ),
       ),
     );

@@ -13,7 +13,8 @@ import 'package:task_manager_firebase_assignment/features/task/widgets/task_head
 import 'package:task_manager_firebase_assignment/auth/sign_in/sign_in.dart';
 
 class TaskListScreen extends StatefulWidget {
-  const TaskListScreen({super.key});
+  String? payload;
+  TaskListScreen({this.payload = 'Notihing In payload' ,super.key});
 
   @override
   State<TaskListScreen> createState() => _TaskListScreenState();
