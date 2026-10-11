@@ -1,1 +1,39 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"fir-taskmanager-dfec0","appId":"1:837598884190:android:42223883a5bc99e4ca5fcf","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"fir-taskmanager-dfec0","configurations":{"android":"1:837598884190:android:42223883a5bc99e4ca5fcf","ios":"1:837598884190:ios:88faa58712f12b8eca5fcf"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "fir-taskmanager-dfec0",
+          "appId": "1:837598884190:android:42223883a5bc99e4ca5fcf",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "fir-taskmanager-dfec0",
+          "configurations": {
+            "android": "1:837598884190:android:42223883a5bc99e4ca5fcf",
+            "ios": "1:837598884190:ios:88faa58712f12b8eca5fcf"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
+}
